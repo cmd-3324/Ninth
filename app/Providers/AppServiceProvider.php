@@ -97,7 +97,7 @@ $view->with('benefit', $car_count);
    $sortParam = request()->input($sortParamName, 'comment_sort');
    $sortColumn  = $defaultColumn;
    $sortDirection = $defaultDirection;
-      if (!$sortParam === 'none') {
+      if (!$sortParam !== 'none') {
         switch ($sortParam) {
             case 'newest':
                 $sortColumn = 'created_at';
@@ -113,7 +113,7 @@ $view->with('benefit', $car_count);
                 break;
             case 'most_replied':
                 $sortColumn = 'reply_num';
-                $sortDirection = 'asc';
+                $sortDirection = 'desc';
                 break;
             default:
                 $sortParam = "none";

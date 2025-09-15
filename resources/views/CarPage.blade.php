@@ -5,6 +5,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
+.nav-duplicate {
+    display: none !important;
+}
     #flash-message {
         opacity: 0;
         transition: opacity 0.5s ease;

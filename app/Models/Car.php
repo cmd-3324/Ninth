@@ -36,36 +36,23 @@ public function carBuyers(): BelongsToMany
         'car_user',
         'car_id',
         'UserID'
-<<<<<<< HEAD
-    )->withTimestamps(); 
-}
 
-  
-=======
     )->withTimestamps();
 }
 
 
->>>>>>> 635f706 (Initial commit)
     public function getTotalBuyersAttribute(): int
     {
         return $this->carBuyers()->count();
     }
 
-<<<<<<< HEAD
-   
-=======
 
->>>>>>> 635f706 (Initial commit)
+
+
 public function updateSalesData(): void
 {
     $userCount = $this->carBuyers()->count();
     $totalStock = $this->sell_number + $this->available_as;
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> 635f706 (Initial commit)
     $available = $totalStock - $userCount;
     if ($available < 0) {
         $available = 0;
@@ -75,8 +62,5 @@ public function updateSalesData(): void
     $this->available_as = $available;
     $this->save();
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> 635f706 (Initial commit)
 }
