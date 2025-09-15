@@ -52,7 +52,7 @@ class AppServiceProvider extends ServiceProvider
         return;
     }
 
-<<<<<<< HEAD
+
     $car = Car::where('car_id', $car_id)->first();
 
     if (!$car) {
@@ -65,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
     $car_count = $price * $count;
 
     return $view->with('benefit', $car_count);
-=======
+
 $car = Car::where('car_id', $car_id)->first();
 
 if (!$car) {
@@ -80,7 +80,7 @@ $car_count = $price * $sell_number;
 
 $view->with('benefit', $car_count);
 
->>>>>>> 635f706 (Initial commit)
+
 });
 
 
