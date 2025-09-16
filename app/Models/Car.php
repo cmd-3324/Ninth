@@ -24,10 +24,14 @@ class Car extends Model
         'sell_number'
     ];
 
-public function getBenefitAttribute(): int
+// In Car.php (the model)
+public function getBenefitAttribute()
 {
-    return $this->price * $this->carBuyers()->count();
+    $price = $this->price ?? 0;
+    $totalBoughtNum = CarUse::where('car_id', $this->car_id)->sum('bought_num') ?? 0;
+    return $price * $totalBoughtNum;
 }
+
 
 public function carBuyers(): BelongsToMany
 {

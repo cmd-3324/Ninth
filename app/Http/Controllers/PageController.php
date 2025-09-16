@@ -146,7 +146,7 @@ class PageController extends Controller
     {
         $car = Car::findOrFail($carId);
 
-        // Check if car is available
+        
         if ($car->available_as <= 0) {
             return redirect()->route('all-cars')->with('error', 'This car is currently out of stock');
         }
