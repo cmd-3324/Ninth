@@ -1,10 +1,6 @@
 <?php
 
 namespace App\Providers;
-// use App\Models\Car;
-// use App\Models\CarUserPivot;
-// use App\Models\CarUser;
-
 use App\Models\Car;
 use App\Models\Caruse;
 use App\Models\CarUser;
@@ -40,54 +36,6 @@ class AppServiceProvider extends ServiceProvider
             }
         }
     });
-
-
-
-
- View::composer('*', function ($view) {
-    $car_id = request()->input('car_id');
-
-    if (!$car_id) {
-        $view->with('benefit', null);
-        return;
-    }
-
-
-    $car = Car::where('car_id', $car_id)->first();
-
-    if (!$car) {
-        $view->with('benefit', null);
-        return;
-    }
-
-    $price = $car->price;
-    $count = CarUse::where('car_id', $car_id)->count();
-    $car_count = $price * $count;
-
-    return $view->with('benefit', $car_count);
-
-$car = Car::where('car_id', $car_id)->first();
-
-if (!$car) {
-    $view->with('benefit', null);
-    return;
-}
-
-$price = $car->price ?? 0;
-$sell_number = $car->sell_number;
-// $totalBoughtNum = Caruse::where('car_id', $car_id)->sum('bought_num') ?? 0;
-$car_count = $price * $sell_number;
-
-$view->with('benefit', $car_count);
-
-
-});
-
-
-
-
-
-
 
         Builder::macro("deleteall", function () {
             $user_id = Auth::user()->UserID;
