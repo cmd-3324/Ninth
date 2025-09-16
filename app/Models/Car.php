@@ -24,7 +24,8 @@ class Car extends Model
         'sell_number'
     ];
 
-// In Car.php (the model)
+// از این میتونم برای اینجور بنیفیت ها راحت و سریغ تر استفاده کنم ، اگر بین get  و اتریبیت اسم اون متفیر رو بنویسم مثات Benifit  توی فاایل بلید میتونیم ازتش استفاد کنم 
+    //https://chatgpt.com/c/68c83795-bfdc-832e-9440-00c7ad7c1201
 public function getBenefitAttribute()
 {
     $price = $this->price ?? 0;
