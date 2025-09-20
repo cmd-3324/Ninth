@@ -18,7 +18,7 @@ class Comment extends Model
         'reply_num'
     ];
 
-    // Relationship to get all replies for this comment
+ 
     public function replies(): HasMany
     {
         return $this->hasMany(Comment::class, 'parent_id')->with('replies')->orderBy('created_at', 'asc');
