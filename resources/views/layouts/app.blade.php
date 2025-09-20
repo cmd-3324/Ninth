@@ -3,14 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="@csrf" content="{{ csrf_token() }}">
-    <title>@yield('title', 'CarSellWebsite')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title', 'CarSellWebsite') || {{ config("app.name", "My CarWebsite") }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
     {{-- Navigation --}}
     @include('layouts.navigation')
     @include('layouts.themmode')
+   <x-darkthem
+    title="This is title"
+    footer="This is footer"
+>
+    <p>This is the main content inside the slot.</p>
+</x-darkthem>
+<hr>
+<!-- above test component codes is the same as below codes  -->
+<x-darkthem>
+    <x-slot:footer>This is another way of showing footer</x-slot:footer>
+    <x-slot:title>This is anothe way of showing title</x-slot:title>
+</x-darkthem>
     {{-- Header --}}
     @include('layouts.header')
 
