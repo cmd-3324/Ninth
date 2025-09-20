@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -484,7 +485,7 @@
         <option value="name_asc" {{ $sortBy =='name_asc' ? 'selected':'' }}>Name: A to Z</option>
         <option value="name_desc" {{ $sortBy =='name_desc' ? 'selected' : '' }}>Name: Z to A</option>
     </select>
-  
+
     <label for="search" class="form-label">Search:</label>
     <form method="GET" action="{{ route('cars.search') }}">
         <input type="text" name="search" class="form-control search-input" placeholder="Search cars..." value="{{ $searchTerm ?? '' }}">
@@ -899,7 +900,7 @@ document.addEventListener('DOMContentLoaded', function() {
         sortInput.name = 'sort';
         sortInput.value = '{{ $sortBy ?? "none" }}';
         favoritesForm.appendChild(sortInput);
-        
+
         const searchInput = document.createElement('input');
         searchInput.type = 'hidden';
         searchInput.name = 'search';
@@ -921,18 +922,18 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const activeSection = urlParams.get('active_section');
-    
+
     if (activeSection) {
         // Hide all sections
         document.querySelectorAll('.content-section').forEach(section => {
             section.classList.remove('active');
         });
-        
+
         // Remove active class from all links
         document.querySelectorAll('.nav-link').forEach(link => {
             link.classList.remove('active');
         });
-        
+
         // Show the requested section
         document.getElementById(activeSection).classList.add('active');
         document.querySelector(`.nav-link[href="#${activeSection}"]`).classList.add('active');

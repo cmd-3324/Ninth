@@ -23,5 +23,6 @@
       <p>A crew of code shamans, pixel alchemists, and AI whisperers who debug with spellcraft.</p>
     </div>
   </div>
+    @include('Test', ['color'=>'red'])
 </div>
 @endsection

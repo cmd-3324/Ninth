@@ -1,6 +1,6 @@
 <footer class="bg-gray-900 text-gray-300 mt-auto">
   <div class="container mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
-    
+
     <!-- About Us -->
     <div>
       <h3 class="text-white text-lg font-semibold mb-4">About Us</h3>
@@ -35,7 +35,7 @@
     <div>
       <h3 class="text-white text-lg font-semibold mb-4">Find Us</h3>
       <div class="rounded overflow-hidden">
-        <iframe 
+        <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.1234567890!2d-122.4194150846817!3d37.77492977975909!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808f7e1234567890%3A0x1234567890abcdef!2sSan%20Francisco%2C%20CA!5e0!3m2!1sen!2sus!4v1630000000000!5m2!1sen!2sus"
           width="100%" height="180" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
         </iframe>

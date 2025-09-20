@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ContactController;
@@ -14,7 +15,6 @@ Route::middleware(['auth', 'verified'])->controller(PageController::class)->grou
     Route::get('/sort-fav-sort-as', 'gotoProfile')->name('sort-fav');
     Route::post('/delete-car', 'deleteCar')->name('delete.car');
     Route::post('/delete-all', 'deleteAll')->name('delete.all');
-    Route::post('/chart/add', 'addToChart')->name('Add-Chart');
     Route::get('/purchase-form/{carId}', 'showPurchaseForm')->name('purchase.form');
     Route::post('/purchase', 'processPurchase')->name('purchaseform');
     Route::post('/chart/remove', 'removeFromChart')->name('chart.remove');
@@ -31,6 +31,7 @@ Route::middleware(['auth', 'verified'])->controller(PageController::class)->grou
 
 Route::controller(PageController::class)->group(function () {
     Route::get('/all', 'show_all_cars')->name('all-cars');
+   Route::post('/chart/add', 'addToChart')->middleware('auth')->name('Add-Chart');
     Route::get('/search-carpage', 'searchCarPage')->name('Search_car_page');
     Route::get('/cars/sorted', 'sortedCars')->name('sort-cars');
     Route::post('/add-comment', 'addComment')->name('add-comment')->middleware('auth');
@@ -70,7 +71,7 @@ Route::fallback(function () {
     }
     return "This section is not created Yet Dear User";
 });
-
-
+Route::get('/test', [CarController::class,'Testme']);
+Route::get('/ff', [CarController::class,'GG']);
 
 require __DIR__.'/auth.php';

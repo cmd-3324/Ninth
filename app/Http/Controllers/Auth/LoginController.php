@@ -32,7 +32,7 @@ class LoginController extends Controller
             'email' => $request->email,
             'password' => $request->password
         ], $request->remember)) {
-            
+
             // THIS IS THE MAGIC LINE - redirects back to where they were!
             return redirect()->intended('/home');
         }
@@ -51,7 +51,7 @@ class LoginController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
+
         return redirect('/home');
     }
 }
