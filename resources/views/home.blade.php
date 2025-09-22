@@ -12,7 +12,7 @@
 
         @auth
             <div class="mt-6 p-4 bg-blue-50 rounded">
-                <p class="text-blue-800">Hello, {{ auth()->user()->name }}! You are logged in.</p>
+                <p class="text-blue-800">Hello, {{ auth()->user()->UserName }}! You are logged in.</p>
             </div>
         @else
 

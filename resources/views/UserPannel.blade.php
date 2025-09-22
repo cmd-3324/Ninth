@@ -487,12 +487,21 @@
     </select>
 
     <label for="search" class="form-label">Search:</label>
-    <form method="GET" action="{{ route('cars.search') }}">
-        <input type="text" name="search" class="form-control search-input" placeholder="Search cars..." value="{{ $searchTerm ?? '' }}">
-        <input type="hidden" name="sort" value="{{ $sortBy }}">
+    <label for="searchInput" class="form-label">Search:</label>
+    <form method="GET" action="{{ route('cars.search') }}" id="searchForm">
+        <input 
+            type="text" 
+            id="searchInput" 
+            name="search" 
+            class="form-control search-input" 
+            placeholder="Search cars..." 
+            value="{{ $searchTerm ?? '' }}" 
+            oninput="handleSearchInput()"
+        >
+        <input type="hidden" name="sort" id="hiddenSort" value="{{ $sortBy }}">
         <input type="hidden" name="sort2" value="{{ $sortByFav ?? 'none' }}">
         <input type="hidden" name="active_section" value="cars">
-        <button type="submit" class="btn btn-primary" style="border-radius:25px">Search</button>
+        {{-- <button type="submit" class="btn btn-primary" style="border-radius:25px">Search</button> --}}
     </form>
 
     <form method='POST' action="{{ route('delete.all') }}">
@@ -891,6 +900,33 @@
 }
 
 // Update the favorites sort form to include all necessary parameters
+// Debounce timer variable to avoid too many submits while typing
+let debounceTimer;
+
+function handleSortChange() {
+    const sortSelect = document.getElementById('sortSelect');
+    const hiddenSort = document.getElementById('hiddenSort');
+    const searchForm = document.getElementById('searchForm');
+
+    // Update the hidden input for sort so it's submitted with the form
+    hiddenSort.value = sortSelect.value;
+
+    // Submit the form to apply sorting (with current search value)
+    searchForm.submit();
+}
+
+function handleSearchInput() {
+    const searchForm = document.getElementById('searchForm');
+
+    // Clear previous timer
+    clearTimeout(debounceTimer);
+
+    // Wait 500ms after user stops typing before submitting
+    debounceTimer = setTimeout(() => {
+        searchForm.submit();
+    }, 500);
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     const favoritesForm = document.getElementById('favoritesSortForm');
     if (favoritesForm) {

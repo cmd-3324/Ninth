@@ -15,24 +15,41 @@ use App\Models\Comment;
 
 class PageController extends Controller
 {
-    public function show_all_cars()
-    {
-        $cars = Car::where('available_as', '>', 0)
-                ->withCount('carBuyers as total_buyers')
-                ->sort()
-                ->paginate(5);
+public function show_all_cars()
+{
+    $cars = Car::where('available_as', '>', 0)
+            ->withCount('carBuyers as total_buyers')
+            ->sort()
+            ->paginate(5);
 
-        $sortByComment = request()->input('comment_sort', 'none');
-        $commentsCount = Comment::count();
+    return view('CarPage', compact(
+        'cars'
+    ));
+}
 
-        $replyCount = Comment::where("parent_id", "!=", null)->count();
-        $commentsTopLevel = Comment::where("parent_id", "=",null)->count();
-        $comments = Comment::whereNull('parent_id')->with('replies')
-            ->sort_comment('created_at', 'desc', 'comment_sort')
-            ->get();
+public function passToCommentView()
+{
+    $sortByComment = request()->input('comment_sort', 'newest');
 
-        return view('CarPage', compact('cars', 'commentsCount', 'comments', 'sortByComment','replyCount','commentsTopLevel'));
-    }
+    $commentsCount = Comment::count();
+    $replyCount = Comment::whereNotNull('parent_id')->count();
+    $commentsTopLevel = Comment::whereNull('parent_id')->count();
+
+    $comments = Comment::whereNull('parent_id')
+        ->sort_comment('created_at', 'desc', 'comment_sort')
+        ->get();
+
+    return view('layouts.app', compact(
+        'comments',
+        'commentsCount',
+        'replyCount',
+        'commentsTopLevel',
+        'sortByComment'
+    ));
+}
+
+
+
 
     public function reply(Request $request)
     {
@@ -71,16 +88,8 @@ class PageController extends Controller
 
         $cars = $query->orderBy('name', 'asc')->paginate(5);
 
-        $sortByComment = request()->input('comment_sort', 'none');
-        $commentsCount = Comment::count();
 
-        $commentsTopLevel = Comment::where("parent_id", "=",null)->count();
-        $comments = Comment::whereNull('parent_id')
-            ->sort_comment('created_at', 'desc', 'comment_sort')
-            ->get();
-          $replyCount = Comment::where("parent_id", "!=", null)->count();
-
-        return view('CarPage', compact('cars', 'searchTerm', 'commentsCount', 'comments', 'sortByComment','commentsTopLevel','sortByComment','replyCount'));
+        return view('CarPage', compact('cars', 'searchTerm'));
     }
 
     public function gotoProfile(Request $request)

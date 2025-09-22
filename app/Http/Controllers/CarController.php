@@ -7,14 +7,16 @@ class CarController extends Controller {
 
 public function Testme() {
 
-return view("Test")->with("name", "Zura")
-->with("lastname","Akbari")->with('color','Brown');
+    return view("Test")->with("name", "Zura")
+    ->with("lastname","Akbari")->with('color','Brown');
 
-}
+    }
 
-public function GG() {
-return view("Test1")->with("country", "ge");
-}
+    public function GG() {
+    return view("Test1")->with("country", "ge");
+    }
+    //Test to see if a function can be used in a blade and then using <x-example< to use it
+//in other blade such as app.blade.php
 
 }
 

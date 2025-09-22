@@ -40,9 +40,9 @@ Route::controller(PageController::class)->group(function () {
     Route::post('/like-reply', 'like_reply')->name('like-reply')->middleware('auth');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/contact', [ContactController::class, 'show_contanct_page'])->name('contact');

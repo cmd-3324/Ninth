@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,10 +13,10 @@
     <p style="font-size: 50px; {{ $country === 'ge' ? 'color: blue;' : '' }}">
         > Alert!! Look Below
     </p>
-
-    <p style="font-family: {{ $font_family}};">
+    <p style="font-size:25px; {{ $country === 'ge' ? 'font-size:333px;' :'' }}">sdf</p>
+    <p style="font-family: {{ $font_family ? "Arial" : 'B nazanin'}};">
         Message : --{{ $alert_message }}
     </p>
 </div>
 </body>
-</html>
+</html> --}}

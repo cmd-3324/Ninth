@@ -9,28 +9,56 @@
 </head>
 <body class="bg-gray-50 min-h-screen flex flex-col">
     {{-- Navigation --}}
+    {{-- @include('layouts.header') --}}
     @include('layouts.navigation')
     @include('layouts.themmode')
-   <x-darkthem
+   {{-- <x-darkthem
     title="This is title"
     footer="This is footer"
->
-    <p>This is the main content inside the slot.</p>
+> --}}
+    {{-- <p>This is the main content inside the slot.</p>
 </x-darkthem>
-<hr>
+<hr> --}}
+{{-- @props(['name' => '', 'textme' => '']) --}}
+{{--
+<x-search-form textme="GGG" name="sdfsdfsdfsdfsdf"> --}}
+
+
+{{-- </x-search-form> --}}
 <!-- above test component codes is the same as below codes  -->
-<x-darkthem>
+
+{{-- <x-darkthem>
+    <p class="">Main Content for slot </p>
     <x-slot:footer>This is another way of showing footer</x-slot:footer>
     <x-slot:title>This is anothe way of showing title</x-slot:title>
-</x-darkthem>
+</x-darkthem> --}}
     {{-- Header --}}
-    @include('layouts.header')
+
 
     {{-- Main Content --}}
     <main class="flex-grow container mx-auto px-4 py-6">
         @yield('content')
     </main>
 
+    {{-- Cooments --}}
+   {{-- @include('Comments', [
+        'comments' => $comments ?? [],
+        'sortByComment' => $sortByComment ?? 'newest',
+        'replyCount' => $replyCount ?? 0,
+        'commentsTopLevel' => $commentsTopLevel ?? 0,
+        'commentsCount' => $commentsCount ?? 0
+    ]) --}}
+{{-- @isset($comments) --}}
+<x-comments
+    :comments="$comments"
+    :comments-count="$commentsCount"
+    :reply-count="$replyCount"
+    :current-sort="$sortByComment"
+    :comments-top-level="$commentsTopLevel"
+/>
+
+
+{{-- @endisset --}}
     {{-- Footer --}}
     @include('layouts.footer')
 </body>

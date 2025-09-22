@@ -26,7 +26,20 @@ class AppServiceProvider extends ServiceProvider
     {
 
         Schema::defaultStringLength(191);
-
+            view()->composer('*', function ($view) {
+        $sortByComment = request()->input('comment_sort', 'newest');
+        
+        $view->with([
+            'comments' => \App\Models\Comment::whereNull('parent_id')
+                ->with('replies')
+                ->sort_comment('created_at', 'desc', 'comment_sort')
+                ->get(),
+            'commentsCount' => \App\Models\Comment::count(),
+            'replyCount' => \App\Models\Comment::whereNotNull('parent_id')->count(),
+            'commentsTopLevel' => \App\Models\Comment::whereNull('parent_id')->count(),
+            'sortByComment' => $sortByComment
+        ]);
+    });
         View::composer('*', function ($view) {
         $data = $view->getData();
 
@@ -41,11 +54,15 @@ class AppServiceProvider extends ServiceProvider
             $user_id = Auth::user()->UserID;
             return $this->where("UserID", $user_id)->delete();
     });
-    Builder::macro("sort_comment", function ($defaultColumn = "created_at", $defaultDirection = "asc", $sortParamName = "comment_sort") {
-   $sortParam = request()->input($sortParamName, 'comment_sort');
-   $sortColumn  = $defaultColumn;
-   $sortDirection = $defaultDirection;
-      if (!$sortParam !== 'none') {
+
+    Builder::macro('sort_comment', function ($defaultColumn = 'created_at', $defaultDirection = 'desc', $sortParamName = 'comment_sort') {
+        $sortParam = request()->input($sortParamName, 'newest');
+
+  
+
+        $sortColumn = $defaultColumn;
+        $sortDirection = $defaultDirection;
+
         switch ($sortParam) {
             case 'newest':
                 $sortColumn = 'created_at';
@@ -64,39 +81,41 @@ class AppServiceProvider extends ServiceProvider
                 $sortDirection = 'desc';
                 break;
             default:
-                $sortParam = "none";
-                $sortColumn = "created_at";
-                $sortDirection = "desc";
-    }}
-     return $this->orderBy($sortColumn, $sortDirection);
-});
+                $sortColumn = $defaultColumn;
+                $sortDirection = $defaultDirection;
+                break;
+        }
 
-Builder::macro('sort', function ($defaultColumn = 'name', $defaultDirection = 'asc', $sortParamName = 'sort') {
-    $sortParam = request()->input($sortParamName, 'none');
-    $sortColumn = $defaultColumn;
-    $sortDirection = $defaultDirection;
+        return $this->orderBy($sortColumn, $sortDirection);
+    });
 
-    if ($sortParam !== 'none') {
-        switch ($sortParam) {
-            case 'price_asc':
-                $sortColumn = 'price';
-                $sortDirection = 'asc';
-                break;
-            case 'price_desc':
-                $sortColumn = 'price';
-                $sortDirection = 'desc';
-                break;
-            case 'name_asc':
-                $sortColumn = 'name';
-                $sortDirection = 'asc';
-                break;
-            case 'name_desc':
-                $sortColumn = 'name';
-                $sortDirection = 'desc';
-                break;
-    }}
+    Builder::macro('sort', function ($defaultColumn = 'name', $defaultDirection = 'asc', $sortParamName = 'sort') {
+        $sortParam = request()->input($sortParamName, 'none');
+        $sortColumn = $defaultColumn;
+        $sortDirection = $defaultDirection;
 
-    return $this->orderBy($sortColumn, $sortDirection);
-});
+        if ($sortParam !== 'none') {
+            switch ($sortParam) {
+                case 'price_asc':
+                    $sortColumn = 'price';
+                    $sortDirection = 'asc';
+                    break;
+                case 'price_desc':
+                    $sortColumn = 'price';
+                    $sortDirection = 'desc';
+                    break;
+                case 'name_asc':
+                    $sortColumn = 'name';
+                    $sortDirection = 'asc';
+                    break;
+                case 'name_desc':
+                    $sortColumn = 'name';
+                    $sortDirection = 'desc';
+                    break;
+            }
+        }
+
+        return $this->orderBy($sortColumn, $sortDirection);
+    });
     }
 }
