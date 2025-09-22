@@ -49,13 +49,8 @@
         'commentsCount' => $commentsCount ?? 0
     ]) --}}
 {{-- @isset($comments) --}}
-<x-comments
-    :comments="$comments"
-    :comments-count="$commentsCount"
-    :reply-count="$replyCount"
-    :current-sort="$sortByComment"
-    :comments-top-level="$commentsTopLevel"
-/>
+ <x-comment />
+
 
 
 {{-- @endisset --}}

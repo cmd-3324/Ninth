@@ -18,39 +18,15 @@ class PageController extends Controller
 public function show_all_cars()
 {
     $cars = Car::where('available_as', '>', 0)
-            ->withCount('carBuyers as total_buyers')
-            ->sort()
-            ->paginate(5);
+        ->withCount('carBuyers as total_buyers')
+        ->sort()
+        ->paginate(5);
+
 
     return view('CarPage', compact(
         'cars'
     ));
 }
-
-public function passToCommentView()
-{
-    $sortByComment = request()->input('comment_sort', 'newest');
-
-    $commentsCount = Comment::count();
-    $replyCount = Comment::whereNotNull('parent_id')->count();
-    $commentsTopLevel = Comment::whereNull('parent_id')->count();
-
-    $comments = Comment::whereNull('parent_id')
-        ->sort_comment('created_at', 'desc', 'comment_sort')
-        ->get();
-
-    return view('layouts.app', compact(
-        'comments',
-        'commentsCount',
-        'replyCount',
-        'commentsTopLevel',
-        'sortByComment'
-    ));
-}
-
-
-
-
     public function reply(Request $request)
     {
         $validated = $request->validate([

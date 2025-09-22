@@ -26,20 +26,7 @@ class AppServiceProvider extends ServiceProvider
     {
 
         Schema::defaultStringLength(191);
-            view()->composer('*', function ($view) {
-        $sortByComment = request()->input('comment_sort', 'newest');
-        
-        $view->with([
-            'comments' => \App\Models\Comment::whereNull('parent_id')
-                ->with('replies')
-                ->sort_comment('created_at', 'desc', 'comment_sort')
-                ->get(),
-            'commentsCount' => \App\Models\Comment::count(),
-            'replyCount' => \App\Models\Comment::whereNotNull('parent_id')->count(),
-            'commentsTopLevel' => \App\Models\Comment::whereNull('parent_id')->count(),
-            'sortByComment' => $sortByComment
-        ]);
-    });
+            
         View::composer('*', function ($view) {
         $data = $view->getData();
 

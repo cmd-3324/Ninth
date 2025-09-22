@@ -23,12 +23,13 @@
     }
 @endphp --}}
 @props([
-    'comments' => [],
+    'comments' => null,
     'commentsCount' => 0,
     'replyCount' => 0,
     'commentsTopLevel' => 0,
-    'currentSort' => 'newest'
+    'sortByComment' => 'newest'
 ])
+
 
 <section class="comments-section mt-8">
     <div class="bg-white rounded-lg shadow-md p-6">
@@ -69,10 +70,10 @@
         <div class="mb-4">
             <label for="comment_sort" class="mr-2 font-medium">Sort by:</label>
             <select name="comment_sort" id="comment_sort" class="border rounded px-2 py-1">
-                <option value="newest" {{ $currentSort == 'newest' ? 'selected' : '' }}>Newest</option>
-                <option value="oldest" {{ $currentSort == 'oldest' ? 'selected' : '' }}>Oldest</option>
-                <option value="most_liked" {{ $currentSort == 'most_liked' ? 'selected' : '' }}>Most Liked</option>
-                <option value="most_replied" {{ $currentSort == 'most_replied' ? 'selected' : '' }}>Most Replied</option>
+                <option value="newest" {{ $sortByComment == 'newest' ? 'selected' : '' }}>Newest</option>
+                <option value="oldest" {{ $sortByComment == 'oldest' ? 'selected' : '' }}>Oldest</option>
+                <option value="most_liked" {{ $sortByComment == 'most_liked' ? 'selected' : '' }}>Most Liked</option>
+                <option value="most_replied" {{ $sortByComment == 'most_replied' ? 'selected' : '' }}>Most Replied</option>
             </select>
         </div>
 
