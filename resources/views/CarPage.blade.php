@@ -177,7 +177,7 @@
         {{ session('error') }}
     </div>
 @endif
-
+    
     @if(!empty($searchTerm))
         <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6">
             <p>Showing results for: <strong>"{{ $searchTerm }}"</strong></p>
@@ -188,7 +188,9 @@
             </form>
         </div>
     @endif
-{{ $cars->links() }}
+ <div class="mt-6">
+        {{ $cars->appends(request()->query())->links() }}
+    </div>
     <h2 class="text-3xl font-bold mb-6 flex items-center gap-2">
         <i class="fas fa-car text-blue-500"></i> Available Cars
         @if(!empty($searchTerm))
@@ -358,7 +360,7 @@
 
 <button id="backToTop" title="Back to Top" style="display:none;position: fixed;bottom: 30px;right: 30px;background-color: #3490dc;color: white;border: none;padding: 12px 16px;border-radius: 50%;font-size: 30px;cursor: pointer;box-shadow: 0 4px 6px rgba(0,0,0,0.2);z-index: 100;">↑</button>
 
-  
+
 
 </section>
 

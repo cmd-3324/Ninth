@@ -108,7 +108,7 @@
                     نمایش
                 </span>
             </div>
-            
+
             <!-- Password Strength Indicator -->
             <div class="indicator mt-2" style="display: none; height: 10px; display: flex; align-items: center; justify-content: space-between;">
                 <span class="weak" style="position: relative; height: 100%; width: 100%; background: lightgrey; border-radius: 5px;"></span>
@@ -116,7 +116,7 @@
                 <span class="strong" style="position: relative; height: 100%; width: 100%; background: lightgrey; border-radius: 5px;"></span>
             </div>
             <div class="text text-sm mt-1" style="display: none; margin-bottom: -10px;"></div>
-            
+
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
@@ -143,6 +143,17 @@
             </x-primary-button>
         </div>
     </form>
+     <x-slot:footerIcons>
+    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+       style="display: inline-flex; align-items: center; color: #1877F2; text-decoration: none; font-weight: 600; gap: 8px;">
+        <!-- Facebook SVG Icon -->
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M22.675 0h-21.35C.597 0 0 .597 0 1.333v21.333C0 23.403.597 24 1.325 24h11.495v-9.294H9.691v-3.622h3.129V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.466.099 2.799.143v3.244l-1.922.001c-1.506 0-1.796.716-1.796 1.765v2.315h3.588l-.467 3.622h-3.121V24h6.116c.73 0 1.324-.597 1.324-1.333V1.333C24 .597 23.403 0 22.675 0z"/>
+        </svg>
+        Facebook
+    </a>
+</x-slot:footerIcons>
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -169,13 +180,13 @@
             if(passwordInput.value != ""){
                 indicator.style.display = "flex";
                 showBtn.style.display = "block";
-                
+
                 // Reset all classes
                 weak.classList.remove("active");
                 medium.classList.remove("active");
                 strong.classList.remove("active");
                 text.classList.remove("weak", "medium", "strong");
-                
+
                 if(passwordInput.value.length <= 3 && (passwordInput.value.match(regExpWeak) || passwordInput.value.match(regExpMedium) || passwordInput.value.match(regExpStrong))) {
                     currentPasswordStrength = 1;
                     weak.classList.add("active");
@@ -205,7 +216,7 @@
                     text.style.display = "none";
                     submitButton.disabled = false;
                 }
-                
+
                 // Check if passwords match
                 checkPasswordMatch();
             } else {
@@ -215,7 +226,7 @@
                 submitButton.disabled = false;
             }
         }
-        
+
         function checkPasswordMatch() {
             if (passwordConfirmInput.value && passwordInput.value !== passwordConfirmInput.value) {
                 text.style.display = "block";
@@ -244,7 +255,7 @@
                 showBtn.style.color = "#64748b";
             }
         });
-        
+
         showBtnConfirm.addEventListener('click', function(){
             if (passwordConfirmInput.type === "password") {
                 passwordConfirmInput.type = "text";
@@ -261,7 +272,7 @@
         if (passwordInput) {
             passwordInput.addEventListener('input', checkPasswordStrength);
         }
-        
+
         if (passwordConfirmInput) {
             passwordConfirmInput.addEventListener('input', checkPasswordMatch);
             passwordConfirmInput.addEventListener('input', function() {
@@ -280,7 +291,7 @@
                 alert('Please choose a stronger password. Weak passwords are not allowed.');
                 return false;
             }
-            
+
             if (passwordInput.value !== passwordConfirmInput.value) {
                 e.preventDefault();
                 alert('Passwords do not match. Please confirm your password correctly.');

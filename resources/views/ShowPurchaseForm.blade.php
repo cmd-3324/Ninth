@@ -9,13 +9,13 @@
             {{ session('error') }}
         </div>
     @endif
-    
+
     @if(session('success'))
         <div id="flash-message" class="bg-green-600 text-white p-4 rounded mb-4">
             {{ session('success') }}
         </div>
     @endif
-    
+
     @php
         $car_id = $car->car_id ?? old('car_id');
     @endphp
@@ -23,7 +23,7 @@
     <div class="container mx-auto px-4 py-8 max-w-2xl">
         <div class="bg-white rounded-lg shadow-md p-6">
             <h1 class="text-center text-2xl font-bold mb-6 text-gray-800">Purchase Your Car</h1>
-            
+
             <div class="mb-6 p-4 bg-gray-50 rounded-lg">
                 <h2 class="text-lg font-semibold mb-2">Car Details</h2>
                 <p><strong>Name:</strong> {{ $car->name }}</p>
@@ -34,20 +34,20 @@
             <form id="purchaseForm" method="POST" action="{{ route('purchaseform') }}" novalidate>
                 @csrf
                 <input type="hidden" name="car_id" value="{{ $car_id }}">
-                
+
                 <!-- Quantity -->
                 <div class="mb-4">
                     <x-input-label for="quantity" :value="__('How Many?')" />
-                    <x-text-input 
-                        id="quantity" 
-                        class="block mt-1 w-full" 
-                        type="number" 
-                        name="quantity" 
-                        min="1" 
-                        max="{{ $car->available_as }}" 
-                        placeholder="Enter quantity (Max: {{ $car->available_as }})" 
-                        :value="old('quantity', 1)" 
-                        required 
+                    <x-text-input
+                        id="quantity"
+                        class="block mt-1 w-full"
+                        type="number"
+                        name="quantity"
+                        min="1"
+                        max="{{ $car->available_as }}"
+                        placeholder="Enter quantity (Max: {{ $car->available_as }})"
+                        :value="old('quantity', 1)"
+                        required
                         oninput="validateQuantity(this)"
                     />
                     <x-input-error :messages="$errors->get('quantity')" class="mt-2" />
@@ -165,6 +165,39 @@
 
     <!-- Custom JavaScript -->
     <script>
+const form = document.getElementById('purchaseForm');
+const expiryInput = document.getElementById('expiry_date');
+
+form.addEventListener('submit', function (e) {
+  const val = expiryInput.value;
+  if (!val) {
+    expiryInput.setCustomValidity('Expiry date is required');
+    expiryInput.reportValidity();
+    e.preventDefault();
+    return;
+  }
+
+  const [year, month] = val.split('-').map(Number);
+  const now = new Date();
+  const currYear = now.getFullYear();
+  const currMonth = now.getMonth() + 1;
+
+  if (year < currYear || (year === currYear && month < currMonth)) {
+    expiryInput.setCustomValidity('Expiry date cannot be before current month');
+    expiryInput.reportValidity();
+    e.preventDefault();
+    return;
+  }
+  if (year > currYear + 4 || (year === currYear + 4 && month > currMonth)) {
+    expiryInput.setCustomValidity('Expiry date cannot be more than 4 years in the future');
+    expiryInput.reportValidity();
+    e.preventDefault();
+    return;
+  }
+
+  expiryInput.setCustomValidity(''); // Clear errors if valid
+});
+
         document.addEventListener('DOMContentLoaded', function () {
             const cardInput = document.getElementById('card_number');
             cardInput?.addEventListener('input', (e) => {
@@ -217,12 +250,12 @@
                 const maxQuantity = parseInt(input.max);
                 const enteredValue = parseInt(input.value);
                 const quantityError = document.getElementById('quantityError');
-                
+
                 if (enteredValue > maxQuantity) {
                     input.value = maxQuantity; // Reset to max value
                     quantityError.classList.remove('hidden');
                     invalidAttempts++;
-                    
+
                     // If user tries too many times, disable the input
                     if (invalidAttempts >= maxInvalidAttempts) {
                         input.disabled = true;
@@ -242,7 +275,7 @@
                 const quantityInput = document.getElementById('quantity');
                 const maxQuantity = parseInt(quantityInput.max);
                 const enteredValue = parseInt(quantityInput.value);
-                
+
                 if (enteredValue > maxQuantity) {
                     e.preventDefault();
                     quantityInput.value = maxQuantity;
@@ -261,7 +294,7 @@
                     nameInput.focus();
                 }
             });
-            
+
             // Flash message handling
             const flashMessage = document.getElementById('flash-message');
             if (flashMessage) {

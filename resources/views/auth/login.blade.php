@@ -43,5 +43,12 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
+        <div>
+      <x-slot:footerIcons>
+
+        <a href="https://google.com" target="_blank" rel="noopener noreferrer">Google Us</a>
+</x-slot:footerIcons>
+
+
     </form>
 </x-guest-layout>

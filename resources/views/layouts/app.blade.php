@@ -40,15 +40,7 @@
         @yield('content')
     </main>
 
-    {{-- Cooments --}}
-   {{-- @include('Comments', [
-        'comments' => $comments ?? [],
-        'sortByComment' => $sortByComment ?? 'newest',
-        'replyCount' => $replyCount ?? 0,
-        'commentsTopLevel' => $commentsTopLevel ?? 0,
-        'commentsCount' => $commentsCount ?? 0
-    ]) --}}
-{{-- @isset($comments) --}}
+  
  <x-comment />
 
 

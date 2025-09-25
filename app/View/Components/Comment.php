@@ -34,4 +34,5 @@ class Comment extends Component
         'sortByComment' => $sortByComment
     ]);
 }
+    
 }

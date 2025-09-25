@@ -9,7 +9,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Auth;
-
+use App\View\Components\Comments;
 Route::middleware(['auth', 'verified'])->controller(PageController::class)->group(function () {
     Route::get('/profile/{user_id}', 'gotoProfile')->name('profile-go');
     Route::get('/sort-fav-sort-as', 'gotoProfile')->name('sort-fav');
@@ -71,6 +71,8 @@ Route::fallback(function () {
     }
     return "This section is not created Yet Dear User";
 });
+Route::post('/comments/delete', [Comments::class, 'deleteComment'])->name('delete-comment');
+
 Route::get('/test', [CarController::class,'Testme']);
 Route::get('/ff', [CarController::class,'GG']);
 
